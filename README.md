@@ -1,4 +1,2 @@
-# Machine Learning in Finance
-Financial analysts use very large datasets containing various information on transactions, customers, money transfers, and so on. Therefore, there are many possible uses of machine learning in finance including trading, process automation or credit scoring. 
-
-In this repository, I will share some of the analysis I work on using financial data.
+# Retail & E-Commerce Projects
+E-commerce companies use data to optimize everyting including understanding customer buying patterns, personalizing marketing and improving supply chain efficiency. In this page, I will be sharing the projects that I have worked on using publicly available e-commerce data.

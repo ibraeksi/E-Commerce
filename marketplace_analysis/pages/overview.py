@@ -40,7 +40,7 @@ def overview():
                  single orders table with all the necessary information required
                  for the analysis. The preprocessing steps can be found in the
                  notebook in the GitHub repository for this project:""")
-    st.markdown("""https://github.com/ibraeksi/E-Commerce/marketplace_analysis""")
+    st.markdown("""https://github.com/ibraeksi/E-Commerce/tree/main/marketplace_analysis""")
 
     st.markdown("""The resulting table consists of 118,233 orders and 44 columns.
                 There are no duplicates and the only missing values left in the table are: """)

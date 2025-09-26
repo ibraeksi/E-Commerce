@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from navbar import navbar
+from modules.navbar import navbar
 from pathlib import Path
 
 order_data = Path(__file__).parents[1] / 'data/processed/processed_orders.csv'

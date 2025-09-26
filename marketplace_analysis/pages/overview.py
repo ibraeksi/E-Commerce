@@ -1,5 +1,5 @@
 import streamlit as st
-from navbar import navbar
+from modules.navbar import navbar
 from pathlib import Path
 
 schema_image = Path(__file__).parents[1] / 'data/images/data_schema.png'

@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
-from marketplace_analysis/pages.overview import overview
-from marketplace_analysis/pages.review_scores import review_scores
-from marketplace_analysis/pages.delivery_time import delivery_time
+from marketplace_analysis.pages.overview import overview
+from marketplace_analysis.pages.review_scores import review_scores
+from marketplace_analysis.pages.delivery_time import delivery_time
 
 
 def main():

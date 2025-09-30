@@ -63,5 +63,5 @@ def overview():
     df = pd.read_csv(order_data, parse_dates=date_cols)
     st.session_state["data"] = df
 
-#if __name__ == '__main__':
-#    overview()
+if __name__ == '__main__':
+    overview()

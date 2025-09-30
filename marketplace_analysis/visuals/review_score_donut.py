@@ -1,6 +1,6 @@
 import plotly.graph_objects as go
 
-def donut(df, x, plot_title = "", legend_title="Score"):
+def review_score_donut(df, x, plot_title = "", legend_title="Score"):
     """
     Creates a donut chart from given data
     df = Dataframe with orders
@@ -14,7 +14,8 @@ def donut(df, x, plot_title = "", legend_title="Score"):
                                 direction ='clockwise', hole=.4, marker_colors=donut_colors, sort=False)])
     fig.update_layout(
         plot_bgcolor="rgba(0, 0, 0, 0)",
-        # width=600, height=600,
+        margin=dict(t=25, b=0, l=0, r=0),
+        height=200, width=250,
         title_text=plot_title, title_x=0.5,
         legend_title_text=legend_title
     )

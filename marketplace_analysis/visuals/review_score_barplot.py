@@ -19,7 +19,7 @@ def review_score_barplot(df, plot_title = ""):
 
     fig.update_layout(
         plot_bgcolor="rgba(0, 0, 0, 0)",
-        width=600, height=400, bargap=0.2,
+        bargap=0.2,
         title_text=plot_title, title_x=0.2
     )
     fig.update_xaxes(

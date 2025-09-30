@@ -3,7 +3,7 @@ import pandas as pd
 from modules.navbar import navbar
 
 from visuals.histogram import histogram
-from visuals.donut import donut
+from visuals.review_score_donut import review_score_donut
 from visuals.review_score_barplot import review_score_barplot
 from visuals.review_wordcloud import review_wordcloud
 
@@ -19,32 +19,39 @@ def review_scores():
     )
 
     df = cached_df
+
     st.subheader("Review Score Distribution")
 
-    left_dist, gap_dist, right_dist = st.columns([5, 1, 6], vertical_alignment="top")
-    with left_dist:
-        score_donut = donut(df, 'review_score')
-        st.plotly_chart(score_donut)
-    with right_dist:
-        score_hist = histogram(df, 'review_score', 'Review Score', 'Number of Reviews', 'All Reviews')
-        st.plotly_chart(score_hist)
+    tab1, tab2 = st.tabs([":star: Analysis", ":cloud: Word Cloud"])
 
-    left_dist_comment, gap_2, right_dist_comment = st.columns([5, 1, 6], vertical_alignment="top")
-    with left_dist_comment:
-        st.markdown("The analysis of missing review comments reveals that:")
-        st.markdown("""- Negative reviews (1-2 stars) are more likely to contain
-                    written feedback, while higher ratings (4-5 stars) often
-                    lack text comments.""")
-        st.markdown("""- This suggests that dissatisfied customers tend to provide
-                    detailed feedback, whereas satisfied customers
-                    typically leave only a rating.""")
-        st.markdown("""- Finally, the comments from the negative reviews can be
-                    analyzed to identify key areas for improvement.""")
-    with right_dist_comment:
-        comment_score_dist = review_score_barplot(df, 'Only Reviews with Comments')
-        st.plotly_chart(comment_score_dist)
+    with tab1:
 
-    if st.checkbox("**:blue-background[Show Word Cloud of Negative Review Comments]**"):
+        left_dist, gap_dist, right_dist = st.columns([7, 1, 4], vertical_alignment="top")
+        with left_dist:
+            st.markdown("\n\n")
+            st.markdown("The analysis of review scores reveals that:")
+            st.markdown("""- Negative reviews (1-2 stars) are more likely to contain
+                        written feedback, while higher ratings (4-5 stars) often
+                        lack text comments.""")
+            st.markdown("""- This suggests that dissatisfied customers tend to provide
+                        detailed feedback, whereas satisfied customers
+                        typically leave only a rating.""")
+            st.markdown("""- Finally, the comments from the negative reviews can be
+                        analyzed to identify key areas for improvement.""")
+        with right_dist:
+            score_donut = review_score_donut(df, 'review_score')
+            st.plotly_chart(score_donut, use_container_width=False)
+
+        left_dist_comment, gap, right_dist_comment = st.columns([5.75, 0.5, 5.75], vertical_alignment="top")
+        with left_dist_comment:
+            score_hist = histogram(df, 'review_score', 'Review Score', 'Number of Reviews', 'All Reviews')
+            st.plotly_chart(score_hist)
+        with right_dist_comment:
+            comment_score_dist = review_score_barplot(df, 'Only Reviews with Comments')
+            st.plotly_chart(comment_score_dist)
+
+    with tab2:
+        st.markdown("Word Cloud of Negative Review Comments")
         only_neg_df = df[df['review_score'] < 4.0].reset_index(drop=True)
         comment_wordcloud = review_wordcloud(only_neg_df)
         st.pyplot(comment_wordcloud)

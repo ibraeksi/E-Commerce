@@ -26,20 +26,23 @@ def delivery_time():
     df = cached_df
     st.subheader("Delivery Time Analysis")
 
-    st.markdown("""- Delivery time has a significant impact on customer satisfaction
-                    as the review score increases with decreasing median delivery time.""")
-    st.markdown("""- As seen, delays in delivery time are also negatively correlated
-                    with customer review scores.""")
+    tab1, tab2, tab3 = st.tabs([":chart_with_upwards_trend: Analysis", ":clock3: Delivery Delays", ":bell: Estimated Delivery"])
 
-    left_violin, gap_violin, right_violin = st.columns([5, 0.5, 6.5], vertical_alignment="top")
-    with left_violin:
-        delivery_violin = delivery_days_violinplot(df, 'Delivery Duration by Review Score')
-        st.plotly_chart(delivery_violin)
-    with right_violin:
-        corr_plot = review_score_corr(df, 'Correlation between Numerical Features')
-        st.plotly_chart(corr_plot)
+    with tab1:
+        st.markdown("""- Delivery time has a significant impact on customer satisfaction
+                        as the review score increases with decreasing median delivery time.""")
+        st.markdown("""- As seen, delays in delivery time are also negatively correlated
+                        with customer review scores.""")
 
-    if st.checkbox("**:blue-background[Show Delivery Delay Analysis]**"):
+        left_violin, gap_violin, right_violin = st.columns([5, 0.5, 6.5], vertical_alignment="top")
+        with left_violin:
+            delivery_violin = delivery_days_violinplot(df, 'Delivery Duration by Review Score')
+            st.plotly_chart(delivery_violin)
+        with right_violin:
+            corr_plot = review_score_corr(df, 'Correlation between Numerical Features')
+            st.plotly_chart(corr_plot)
+
+    with tab2:
         df['delivery_days'] = (df['order_delivered_customer'] - df['order_purchase']).dt.days
         df['delivery_delay'] = (df['order_delivered_customer'] - df['order_estimated_delivery']).dt.days
         df["Status"] = df.apply(delivery_status, axis=1)
@@ -63,7 +66,7 @@ def delivery_time():
                         there may be room for improvement.""")
 
 
-    if st.checkbox("**:blue-background[Show Estimated Delivery Time Analysis]**"):
+    with tab3:
         # Calculate delivery durations
         df['approval_time'] = df['order_approved'] - df['order_purchase']
         df['waiting_time'] = df['order_delivered_carrier'] - df['order_approved']

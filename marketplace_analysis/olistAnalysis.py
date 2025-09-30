@@ -30,6 +30,5 @@ def main():
     elif st.session_state.active_page == 'Delivery Time':
         delivery_time()
 
-
 if __name__ == '__main__':
     main()

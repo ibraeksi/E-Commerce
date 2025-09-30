@@ -1,11 +1,12 @@
 import streamlit as st
+import pandas as pd
 from modules.navbar import navbar
 from pathlib import Path
 
+order_data = Path(__file__).parents[1] / 'data/processed/processed_orders.csv'
 schema_image = Path(__file__).parents[1] / 'data/images/data_schema.png'
 
 def overview():
-    st.session_state.update(st.session_state)
     navbar()
 
     st.set_page_config(
@@ -57,5 +58,10 @@ def overview():
                 i.e, the customers did not provide any title with their rating,
                 which is to be expected in real-world data.""")
 
-if __name__ == '__main__':
-    overview()
+    date_cols = ['order_purchase', 'order_approved', 'order_delivered_carrier', 'order_delivered_customer',
+             'order_estimated_delivery', 'shipping_limit_date', 'review_create', 'review_answer']
+    df = pd.read_csv(order_data, parse_dates=date_cols)
+    st.session_state["data"] = df
+
+#if __name__ == '__main__':
+#    overview()

@@ -12,7 +12,7 @@ def review_scores():
     navbar()
 
     st.set_page_config(
-        page_title="Olist Analysis",
+        page_title="E-Commerce Analysis",
         page_icon=":moneybag:",
         layout="wide",
         initial_sidebar_state="expanded"

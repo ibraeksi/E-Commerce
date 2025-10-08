@@ -1,8 +1,6 @@
 import streamlit as st
 import pandas as pd
-import statsmodels.formula.api as smf
 from modules.navbar import navbar
-from modules.utils import return_significative_coef
 from visuals.ols_product_review_score_barplot import ols_product_review_score_barplot
 from visuals.order_num_items_visuals import order_num_items_donut
 from visuals.order_num_items_visuals import order_grouped_num_items_donut
@@ -15,7 +13,7 @@ def product_category():
     navbar()
 
     st.set_page_config(
-        page_title="Olist Analysis",
+        page_title="E-Commerce Analysis",
         page_icon=":moneybag:",
         layout="wide",
         initial_sidebar_state="expanded"
@@ -55,11 +53,16 @@ def product_category():
                 df_std[f] = df[f].map(lambda x: (x - mu) / sigma)
             df_std[selected_features].head()
 
-            model = smf.ols(formula=f"review_score ~ {'+ '.join(selected_features)}", data=df_std).fit()
+            ### The following calculation leads to slow execution for the deployed app
+            # model = smf.ols(formula=f"review_score ~ {'+ '.join(selected_features)}", data=df_std).fit()
+            # st.dataframe(return_significative_coef(model))
 
             st.markdown("\n\n")
             st.markdown("\n\n")
-            st.dataframe(return_significative_coef(model))
+            st.dataframe(pd.DataFrame({'feature': ['product_photos_qty', 'price', 'product_volume_cm3',
+                                                   'num_items', 'delay_vs_expected', 'delivery_time'],
+                                       'p-value': [0.0000, 0.0001, 0.0205, 0.0000, 0.0000, 0.0000],
+                                       'coeff': [0.02, 0.02, -0.01, -0.12, -0.14, -0.38]}))
 
             st.markdown("""- The p-values for the selected continuous features confirm
                         that the relationship with review scores are statistically significant.""")

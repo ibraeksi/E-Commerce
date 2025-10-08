@@ -1,4 +1,5 @@
 streamlit
+streamlit-folium
 jupyterlab
 numpy
 pandas
@@ -6,3 +7,4 @@ matplotlib
 seaborn
 plotly
 wordcloud
+statsmodels

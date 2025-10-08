@@ -3,6 +3,9 @@ import pandas as pd
 from pages.overview import overview
 from pages.review_scores import review_scores
 from pages.delivery_time import delivery_time
+from pages.product_category import product_category
+from pages.seller_locations import seller_locations
+from pages.customer_locations import customer_locations
 
 
 def main():
@@ -29,6 +32,12 @@ def main():
         review_scores()
     elif st.session_state.active_page == 'Delivery Time':
         delivery_time()
+    elif st.session_state.active_page == 'Product Categories':
+        product_category()
+    elif st.session_state.active_page == 'Customer Locations':
+        customer_locations()
+    elif st.session_state.active_page == 'Seller Locations':
+        seller_locations()
 
 if __name__ == '__main__':
     main()

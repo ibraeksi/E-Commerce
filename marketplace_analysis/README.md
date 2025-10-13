@@ -12,3 +12,7 @@ https://e-commerce-marketplace-analysis.streamlit.app/
 - Exploratory Data Analysis
   - Review Scores
   - Delivery Time
+  - Product Categories
+- Geospatial Analysis
+  - User Locations
+  - Spending Distribution

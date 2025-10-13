@@ -50,14 +50,14 @@ def order_count_city_map(df, type):
         num_orders = row['order_count']
 
         if num_orders >= 1000:
-            color = 'crimson'  # Огненно-красный
-            radius = 18  # 9 * 2
+            color = 'crimson'
+            radius = 18
         elif num_orders >= 500:
-            color = 'darkorange'  # Коралл
-            radius = 13  # 6 * 2
+            color = 'darkorange'
+            radius = 13
         else:
-            color = 'royalblue'  # Голубой
-            radius = 9  # 4 * 2
+            color = 'royalblue'
+            radius = 9
 
         folium.CircleMarker(
             location=[row['lat'], row['lng']],

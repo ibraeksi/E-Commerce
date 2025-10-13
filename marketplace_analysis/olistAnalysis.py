@@ -4,8 +4,8 @@ from pages.overview import overview
 from pages.review_scores import review_scores
 from pages.delivery_time import delivery_time
 from pages.product_category import product_category
-from pages.seller_locations import seller_locations
-from pages.customer_locations import customer_locations
+from pages.user_locations import user_locations
+from pages.financial_scattergeo import financial_scattergeo
 
 
 def main():
@@ -34,10 +34,10 @@ def main():
         delivery_time()
     elif st.session_state.active_page == 'Product Categories':
         product_category()
-    elif st.session_state.active_page == 'Customer Locations':
-        customer_locations()
-    elif st.session_state.active_page == 'Seller Locations':
-        seller_locations()
+    elif st.session_state.active_page == 'User Locations':
+        user_locations()
+    elif st.session_state.active_page == 'Spending Distribution':
+        financial_scattergeo()
 
 if __name__ == '__main__':
     main()

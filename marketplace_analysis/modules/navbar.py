@@ -11,3 +11,4 @@ def navbar():
         st.subheader('Geospatial Analysis')
         st.page_link('pages/user_locations.py', label='User Locations')
         st.page_link('pages/financial_scattergeo.py', label='Spending Distribution')
+        st.page_link('pages/delivery_scattergeo.py', label='Delivery Time')

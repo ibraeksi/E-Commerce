@@ -62,8 +62,8 @@ def financial_scattergeo():
             st.markdown("\n\n")
             st.markdown("\n\n")
             st.markdown("Freight Ratio = $$ \\frac{Freight Value}{Order Price} $$")
-            st.markdown("""- For example, if a product costs 100 R\$ and the freight value
-                        is 20 R\$, then the Freight Ratio is 20%.""")
+            st.markdown("""- For example, if a product costs 100 BRL and the freight value
+                        is 20 BRL, then the Freight Ratio is 20%.""")
             st.markdown("""- As seen, the freight ratio is higher in the sparsely populated
                         North, in some cases costing up to 4 times more than the product itself
                         due to increased logistics costs.""")

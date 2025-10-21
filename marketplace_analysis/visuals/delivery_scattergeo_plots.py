@@ -2,11 +2,11 @@ import plotly.express as px
 import plotly.graph_objects as go
 import pandas as pd
 
-def financial_scattergeo_plots(df, plot_type, plot_title = ""):
+def delivery_scattergeo_plots(df, plot_type, plot_title = ""):
     """
-    Creates a scattergeo plot based on financial KPIs
+    Creates a scattergeo plot based on delivery KPIs
     df = Dataframe with orders
-    plot_type = Feature to calculate distribution (Total Revenue, Average Ticket or Freight Ratio)
+    plot_type = Feature to calculate distribution (Shipping Time, Delayed Orders or Review Score)
     plot_title = Title of plot (No title by default)
     """
     # Removing some outliers
@@ -23,27 +23,27 @@ def financial_scattergeo_plots(df, plot_type, plot_title = ""):
     df['customer_zipcode_prefix'] = df['customer_zipcode'].astype(str).str.zfill(5).str[0:3]
     df['customer_zipcode_prefix'] = df['customer_zipcode_prefix'].astype(int)
 
-    if plot_type == 'revenue':
-        grouped_df = df.groupby(['customer_zipcode_prefix', 'customer_city']).agg({'price': 'sum', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
-        grouped_df['marker_size'] = grouped_df['price']/3000
-        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Revenue: ' + round(grouped_df['price'],2).astype(str)
-        colorbar_feature = 'price'
-        colorbar_title = "Total Revenue (RBL)"
-    elif plot_type == 'ticket':
-        grouped_df = df.groupby(['order_id', 'customer_city']).agg({'price': 'sum', 'customer_zipcode_prefix': 'max', 'customer_latitude': 'mean', 'customer_longitude': 'mean'})\
-            .groupby(['customer_zipcode_prefix', 'customer_city']).agg({'price': 'mean', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
-        grouped_df['marker_size'] = grouped_df['price']/100
-        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Avg. Ticket: ' + round(grouped_df['price'],2).astype(str)
-        colorbar_feature = 'price'
-        colorbar_title = "Average Ticket (RBL)"
-    elif plot_type == 'freight':
-        step_df = df.groupby(['order_id', 'customer_city']).agg({'price': 'sum', 'freight_value': 'sum', 'customer_zipcode_prefix': 'max', 'customer_latitude': 'mean', 'customer_longitude': 'mean'})
-        step_df['freight_ratio'] = 100*(step_df['freight_value'] / step_df['price'])
-        grouped_df = step_df.groupby(['customer_zipcode_prefix', 'customer_city']).agg({'freight_ratio': 'mean', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
-        grouped_df['marker_size'] = grouped_df['freight_ratio']/15
-        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Freight Ratio: ' + round(grouped_df['freight_ratio'],1).astype(str) + ' %'
-        colorbar_feature = 'freight_ratio'
-        colorbar_title = "Freight Ratio (%)"
+    if plot_type == 'shipping':
+        grouped_df = df.groupby(['customer_zipcode_prefix', 'customer_city']).agg({'shipping_days': 'mean', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
+        grouped_df['marker_size'] = grouped_df['shipping_days']/2
+        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Shipping Time: ' + round(grouped_df['shipping_days'],2).astype(str) + ' days'
+        colorbar_feature = 'shipping_days'
+        colorbar_title = "Shipping Time (days)"
+        colorbar_max = 30
+    elif plot_type == 'delays':
+        grouped_df = df.groupby(['customer_zipcode_prefix', 'customer_city']).agg({'delay_days': 'mean', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
+        grouped_df['marker_size'] = grouped_df['delay_days']/2
+        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Delay: ' + round(grouped_df['delay_days'],2).astype(str) + ' days'
+        colorbar_feature = 'delay_days'
+        colorbar_title = "Delay Time (days)"
+        colorbar_max = 30
+    elif plot_type == 'review':
+        grouped_df = df.groupby(['customer_zipcode_prefix', 'customer_city']).agg({'review_score': 'mean', 'customer_latitude': 'mean', 'customer_longitude': 'mean'}).reset_index()
+        grouped_df['marker_size'] = 10
+        grouped_df['marker_text'] = grouped_df['customer_city'].str.title() + '<br>Avg. Score: ' + round(grouped_df['review_score'],2).astype(str)
+        colorbar_feature = 'review_score'
+        colorbar_title = "Review Score"
+        colorbar_max = 5
 
     fig = go.Figure(data=go.Scattergeo(
         lat = grouped_df['customer_latitude'],
@@ -60,8 +60,8 @@ def financial_scattergeo_plots(df, plot_type, plot_title = ""):
                 ),
                 colorscale = 'thermal',
                 cmin = 0,
+                cmax = colorbar_max,
                 color = grouped_df[colorbar_feature],
-                cmax = grouped_df[colorbar_feature].max(),
                 colorbar=dict(
                     title=dict(
                         text=colorbar_title

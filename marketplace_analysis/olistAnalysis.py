@@ -6,6 +6,7 @@ from pages.delivery_time import delivery_time
 from pages.product_category import product_category
 from pages.user_locations import user_locations
 from pages.financial_scattergeo import financial_scattergeo
+from pages.delivery_scattergeo import delivery_scattergeo
 
 
 def main():
@@ -38,6 +39,8 @@ def main():
         user_locations()
     elif st.session_state.active_page == 'Spending Distribution':
         financial_scattergeo()
+    elif st.session_state.active_page == 'Delivery Time':
+        delivery_scattergeo()
 
 if __name__ == '__main__':
     main()

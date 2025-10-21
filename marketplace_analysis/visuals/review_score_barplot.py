@@ -4,9 +4,6 @@ def review_score_barplot(df, plot_title = ""):
     """
     Creates a distribution of review scores with comments
     df = Dataframe with orders
-    x = Parameter to calculate the distribution
-    x_title = Name of x axis
-    y_title = Name of y axis
     plot_title = Title of plot (No title by default)
     """
 

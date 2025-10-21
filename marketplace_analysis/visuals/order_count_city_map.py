@@ -1,8 +1,6 @@
 import folium
 from folium.plugins import MarkerCluster
 
-# to add a legend title for using with a filtered dataframe
-# <p style="margin:0 0 5px 0;">Only cities with <b>10+ orders</b> included</p>
 
 legend_html = f'''
 <div style="
@@ -15,6 +13,7 @@ legend_html = f'''
     padding: 10px;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.3);
     ">
+  <p style="margin:0 0 5px 0;">Showing only cities with <b>10+ orders</b></p>
   <p style="margin:0;">
     <span style="display:inline-block; width:12px; height:12px; background-color:#e63946; border-radius:50%; margin-right:6px;"></span>
     1000+ orders
@@ -25,7 +24,7 @@ legend_html = f'''
   </p>
   <p style="margin:0;">
     <span style="display:inline-block; width:12px; height:12px; background-color:#48cae4; border-radius:50%; margin-right:6px;"></span>
-    1–499 orders
+    10–499 orders
   </p>
 </div>
 '''
@@ -54,12 +53,12 @@ def order_count_city_map(df, type):
     city_group = city_group[city_group['lon'] <=  -34.79314722]
 
     # To apply a filter for minimum number of orders
-    # filtered_city_group = city_group[city_group['order_count'] > 0]
+    filtered_city_group = city_group[city_group['order_count'] >= 10]
 
     m = folium.Map(location=[-14.2350, -51.9253], zoom_start=4)
     marker_cluster = MarkerCluster().add_to(m)
 
-    for _, row in city_group.iterrows():
+    for _, row in filtered_city_group.iterrows():
         num_orders = row['order_count']
 
         if num_orders >= 1000:

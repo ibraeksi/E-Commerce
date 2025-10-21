@@ -12,8 +12,7 @@ def review_score_corr(df, plot_title = ""):
     df['delay_vs_expected'] = (df['order_delivered_customer'] - df['order_estimated_delivery']).dt.days
 
     df_corr = df[['product_weight_grams',
-        'product_length_cm', 'product_height_cm', 'product_width_cm',
-        'payment_installments', 'payment_value',
+        'product_length_cm', 'product_height_cm', 'product_width_cm', 'payment_value',
         'review_score', 'delivery_time', 'delay_vs_expected']].corr(numeric_only=True).round(2)
 
     mask = np.zeros_like(df_corr, dtype=bool)

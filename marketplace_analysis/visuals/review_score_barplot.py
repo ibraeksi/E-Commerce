@@ -7,10 +7,10 @@ def review_score_barplot(df, plot_title = ""):
     plot_title = Title of plot (No title by default)
     """
 
-    total_num_reviews = df.groupby('review_score')['review_id'].count()
-    missing_reviews = df[df['review_comment'].isnull()].groupby('review_score')['review_id'].count()
+    total_num_reviews = df.groupby('review_score')['order_id'].count()
+    missing_reviews = df[df['review_comment']].groupby('review_score')['order_id'].count()
 
-    res = (100 - (missing_reviews / total_num_reviews).fillna(0)*100).reset_index().rename(columns={'review_id': 'perc'})
+    res = (100 - (missing_reviews / total_num_reviews).fillna(0)*100).reset_index().rename(columns={'order_id': 'perc'})
 
     fig = px.bar(res, x='review_score', y='perc')
 

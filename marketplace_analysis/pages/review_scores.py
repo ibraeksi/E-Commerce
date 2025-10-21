@@ -1,11 +1,13 @@
 import streamlit as st
 import pandas as pd
 from modules.navbar import navbar
+from pathlib import Path
+
+wordcloud_image = Path(__file__).parents[1] / 'data/images/negative_review_wordcloud.png'
 
 from visuals.histogram import histogram
 from visuals.review_score_donut import review_score_donut
 from visuals.review_score_barplot import review_score_barplot
-from visuals.review_wordcloud import review_wordcloud
 
 
 def review_scores():
@@ -52,9 +54,13 @@ def review_scores():
 
     with tab2:
         st.markdown("Word Cloud of Negative Review Comments")
-        only_neg_df = df[df['review_score'] < 4.0].reset_index(drop=True)
-        comment_wordcloud = review_wordcloud(only_neg_df)
-        st.pyplot(comment_wordcloud)
+
+        ### Real-Time Word Cloud Creation avoided to save memory
+        # only_neg_df = df[df['review_score'] < 4.0].reset_index(drop=True)
+        # comment_wordcloud = review_wordcloud(only_neg_df)
+        # st.pyplot(comment_wordcloud)
+
+        st.image(wordcloud_image)
 
         st.markdown("The most used words and their translations are:")
 

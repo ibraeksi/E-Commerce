@@ -59,7 +59,7 @@ def overview():
                 which is to be expected in real-world data.""")
 
     date_cols = ['order_purchase', 'order_approved', 'order_delivered_carrier', 'order_delivered_customer',
-             'order_estimated_delivery', 'shipping_limit_date', 'review_create', 'review_answer']
+             'order_estimated_delivery']
     df = pd.read_csv(order_data, parse_dates=date_cols)
     st.session_state["data"] = df
 

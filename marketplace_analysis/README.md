@@ -16,3 +16,4 @@ https://e-commerce-marketplace-analysis.streamlit.app/
 - Geospatial Analysis
   - User Locations
   - Spending Distribution
+  - Delivery Time
